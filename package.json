@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7"
+  },
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "An app to help you organize your day, week, month or year",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paul Anigbo",
+  "license": "ISC"
+}
