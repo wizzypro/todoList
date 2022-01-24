@@ -67,20 +67,6 @@ app.get("/:customList", (req, res)=>{
         console.log(foundList);
       }
     }
-
-    // if (err) {
-    //   console.log(err);
-    // } else {
-    //   if (result.length === 0) {
-    //
-    //
-
-    //   } else {
-
-    //   }
-    //
-    //   console.log(result);
-    // }
   });
 
 
@@ -132,11 +118,13 @@ app.get("/", (req, res)=>{
         })
       } else {
 
-        res.render("list", {listTitle: currentDay, listItemx: items});
+        res.render("list", {listTitle: "Today", listItemx: items});
       }
 
     }
   });
+
+  // used to delete all items doc
 
   // Item.deleteMany({}, (err)=>{
   //   if (err) {
@@ -151,6 +139,7 @@ app.get("/", (req, res)=>{
 
 app.post("/delete", (req, res)=>{
   const checkedItemID = req.body.checkbox;
+
 
   Item.deleteOne({_id: checkedItemID}, (err)=>{
     if (err) {
@@ -168,16 +157,26 @@ app.post("/", (req, res)=>{
 
   const item = new Item({
     name: listItem
-  })
+  });
 
-  if(listType === "work") {
-    workItems.push(listItem);
-    res.redirect("/work");
-  }
-  else {
-    listItems.push(listItem);
+  if (listType === "Today") {
+
+
     item.save();
     res.redirect("/");
+  } else {
+
+    List.findOne({name: listType}, (err, foundLists)=>{
+      if (err) {
+        console.log(err);
+      } else {
+        foundLists.items.push(item);
+        foundLists.save();
+        res.redirect(`/${listType}`);
+      }
+    });
+
+
   }
 
 });
